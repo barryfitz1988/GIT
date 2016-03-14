@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-Nov-2015 15:46:30 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.adf_ass_1.Role" table="ROLE">
+        <id name="role_id" type="int">
+            <column name="ROLE_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="dbId" type="int">
+            <column name="DBID" />
+        </property>
+        <property name="role_name" type="java.lang.String">
+            <column name="ROLE_NAME" />
+        </property>
+        <property name="role_display_name" type="java.lang.String">
+            <column name="ROLE_DISPLAY_NAME" />
+        </property>
+        <property name="role_url" type="java.lang.String">
+            <column name="ROLE_URL" />
+        </property>
+    </class>
+</hibernate-mapping>

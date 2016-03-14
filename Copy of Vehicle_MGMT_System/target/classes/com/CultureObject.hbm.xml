@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-Nov-2015 15:46:30 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.adf_ass_1.CultureObject" table="CULTUREOBJECT">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" />
+        </property>
+        <property name="date" type="java.lang.String">
+            <column name="DATE" />
+        </property>
+        <property name="medium" type="java.lang.String">
+            <column name="MEDIUM" />
+        </property>
+        <property name="creditline" type="java.lang.String">
+            <column name="CREDITLINE" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <property name="gallery_text" type="java.lang.String">
+            <column name="GALLERY_TEXT" />
+        </property>
+        <bag name="image" table="IMAGE" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="com.adf_ass_1.Image" />
+        </bag>
+        <bag name="participations" table="PARTICIPATION" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="com.adf_ass_1.Participation" />
+        </bag>
+    </class>
+</hibernate-mapping>

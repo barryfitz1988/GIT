@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-Nov-2015 15:46:30 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.adf_ass_1.Participant" table="PARTICIPANT">
+        <id name="DbID" type="int">
+            <column name="DBID" />
+            <generator class="assigned" />
+        </id>
+        <property name="person_id" type="int">
+            <column name="PERSON_ID" />
+        </property>
+        <property name="person_name" type="java.lang.String">
+            <column name="PERSON_NAME" />
+        </property>
+        <property name="person_date" type="java.lang.String">
+            <column name="PERSON_DATE" />
+        </property>
+        <property name="person_url" type="java.lang.String">
+            <column name="PERSON_URL" />
+        </property>
+    </class>
+</hibernate-mapping>
