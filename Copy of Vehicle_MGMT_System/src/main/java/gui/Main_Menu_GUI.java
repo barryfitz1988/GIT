@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.Icon;
 
 public class Main_Menu_GUI extends JFrame {
 
@@ -22,6 +23,7 @@ public class Main_Menu_GUI extends JFrame {
 	private ImageIcon customerIcon = new ImageIcon("images/customers.gif");
 	private ImageIcon employeeIcon = new ImageIcon("images/employee.gif");
 	private ImageIcon invoiceIcon = new ImageIcon("images/cash.gif");
+	private ImageIcon salesIcon = new ImageIcon("images/sales.gif");
 	private ImageIcon exitIcon = new ImageIcon("images/exit.gif");
 	private JButton appointmentJButton  = new JButton(appointmentIcon);
 	private JButton serviceJButton  = new JButton(serviceIcon);
@@ -32,7 +34,7 @@ public class Main_Menu_GUI extends JFrame {
 	private JButton employeeJButton  = new JButton(employeeIcon);
 	private JButton invoiceJButton  = new JButton(invoiceIcon);
 	private JButton exitJButton  = new JButton(exitIcon);
-
+	private JButton SalesJButton = new JButton(salesIcon);
 	private final JSeparator separator = new JSeparator();
 	
 	
@@ -51,14 +53,14 @@ public class Main_Menu_GUI extends JFrame {
 		panel.add(vehicleJButton);
 		rosterJButton.setBounds(493, 113, 80, 80);
 		panel.add(rosterJButton);
-		customerJButton.setBounds(77, 273, 80, 80);
+		customerJButton.setBounds(38, 273, 80, 80);
 		panel.add(customerJButton);
-		employeeJButton.setBounds(199, 273, 80, 80);
+		employeeJButton.setBounds(150, 273, 80, 80);
 		panel.add(employeeJButton);
-		invoiceJButton.setBounds(319, 273, 80, 80);
+		invoiceJButton.setBounds(258, 273, 80, 80);
 		panel.add(invoiceJButton);
 
-		exitJButton.setBounds(454, 273, 80, 80);
+		exitJButton.setBounds(493, 273, 80, 80);
 		panel.add(exitJButton);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 651, 448);
@@ -73,6 +75,10 @@ public class Main_Menu_GUI extends JFrame {
 		lblMainMenu.setBounds(258, 38, 114, 14);
 		lblMainMenu.setFont(new Font("Tahoma", Font.BOLD, 17));
 		panel.add(lblMainMenu);
+		
+		
+		SalesJButton.setBounds(369, 273, 80, 80);
+		panel.add(SalesJButton);
 		
 		
 		exitJButton.addActionListener(new ActionListener() {
@@ -139,27 +145,18 @@ public class Main_Menu_GUI extends JFrame {
 		
 		}
 	
+	
+	public void addSalesListener(ActionListener listenForButton){
+	    
+		SalesJButton.addActionListener(listenForButton);
+
+		
+		}
+	
 	public void addInvoiceListener(ActionListener listenForButton){
 	    
 		invoiceJButton.addActionListener(listenForButton);
 
 		
 		}
-	
-	
-	
-	
-
-	    
-		
-		
-
-		
-		
-	
-	
-	
-	
-	
-	
 }

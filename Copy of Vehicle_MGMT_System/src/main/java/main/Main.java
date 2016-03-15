@@ -8,6 +8,7 @@ import gui.Invoice_GUI;
 import gui.Main_Menu_GUI;
 import gui.Parts_GUI;
 import gui.Roster_GUI;
+import gui.Sales_GUI;
 import gui.Service_GUI;
 import gui.Vehicle_GUI;
 
@@ -23,6 +24,7 @@ import model.Employee_Model;
 import model.Invoice_Model;
 import model.Parts_Model;
 import model.Roster_Model;
+import model.Sales_Model;
 import model.Service_Model;
 import model.Vehicle_Model;
 
@@ -45,6 +47,7 @@ import controller.Employee_Controller;
 import controller.Invoice_Controller;
 import controller.Parts_Controller;
 import controller.Roster_Controller;
+import controller.Sales_Controller;
 import controller.Service_Controller;
 import controller.Vehicle_Controller;
 
@@ -84,7 +87,9 @@ public class Main {
 	       Roster_Model rosterModel = new Roster_Model();
 	       Roster_GUI rosterView = new Roster_GUI();
 	       Roster_Controller rosterController = new Roster_Controller(theView, rosterView, rosterModel);
-	  
+	       Sales_Model salesModel = new Sales_Model();
+	       Sales_GUI salesView = new Sales_GUI();
+	       Sales_Controller salesController = new Sales_Controller(theView, salesView, salesModel);
 	       
 
 		

@@ -7,6 +7,8 @@ import gui.Roster_GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import model.Roster_Model;
 
 public class Roster_Controller {
@@ -60,10 +62,15 @@ public class Roster_Controller {
     		 try {
 
 
-    			 maingui.dispose();
+    			 //maingui.dispose();
     			 
     			 
-    			 rostergui.setVisible(true);
+    			 //rostergui.setVisible(true);
+    			 
+    				JOptionPane.showMessageDialog(null, " CURRENTLY A WORK IN PROGRESS "
+    						+ "MAY RETURN AT A LATER DATE  "  ," Under Construction "
+    						, JOptionPane.WARNING_MESSAGE);
+    					
     			 
     		 
     		 } catch (NumberFormatException nfe) {
