@@ -70,6 +70,7 @@ public class Employee_Controller {
 
 						employeegui.getIdTextField().setText(
 								Integer.toString(c.getEmployee_id()));
+						//employeegui.getIdTextField().setEditable(false);
 						employeegui.getNameTextfield().setText(
 								c.getEmp_firstname());
 						employeegui.getSurnameTextField().setText(

@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import model.Invoice_Model;
+import model.Items_Model;
 import dao.Invoice_dao;
 
 
@@ -38,6 +39,15 @@ public class Invoice_Service {
 		dao.persist(entity);
 
 	}
+	
+	
+	public void persistItem(Items_Model entity) {
+
+		dao.persistItems(entity);
+
+	}
+	
+	
 	//Update DB
 	public void update(Invoice_Model entity) {
 
@@ -64,6 +74,15 @@ public class Invoice_Service {
 	public List<Invoice_Model> findAll() {
 		dao.openCurrentSession();
 		List<Invoice_Model> object = dao.findAll();
+		dao.closeCurrentSession();
+		return object;
+	}
+	
+	
+	// FindAll in DB
+	public List<Items_Model> findAllItems() {
+		dao.openCurrentSession();
+		List<Items_Model> object = dao.findAllItems();
 		dao.closeCurrentSession();
 		return object;
 	}

@@ -47,7 +47,7 @@ public class AddAppointment_GUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel customerPanel = new JPanel();
-		customerPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Search For Vehicle", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 0, 0)));
+		customerPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Search For Vehicle By Registration", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 0, 0)));
 		customerPanel.setBounds(10, 11, 458, 133);
 		contentPane.add(customerPanel);
 		customerPanel.setLayout(null);

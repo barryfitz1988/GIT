@@ -1,52 +1,56 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Invoice_Model {
 	
-	@GeneratedValue
+	
 	@Id
+	@GeneratedValue
 	private int id;
-	private int job_ID;
 	private String customername;
 	private String vehiclereg;
-	private String make;
-	private String model;
-	private String tech;
 	private String date;
-	private String service;
 	private String price;
-	@Column(length = 500)
-	private String parts;
+	private String service;
+	@Transient
+	private ArrayList<Items_Model> items;
 	
 
 	
 
-	public Invoice_Model(int id, int job_ID, String customername,
-			String vehiclereg, String make, String model, String tech,
-			String date, String service, String price, String parts) {
+
+	
+	public Invoice_Model(int id, String customername, String vehiclereg,
+			String make, String model, String date, String price,String service) {
 		super();
 		this.id = id;
-		this.job_ID = job_ID;
 		this.customername = customername;
 		this.vehiclereg = vehiclereg;
-		this.make = make;
-		this.model = model;
-		this.tech = tech;
 		this.date = date;
-		this.service = service;
 		this.price = price;
-		this.parts = parts;
+		this.service =service;
+	
+	
+		
+		
 	}
 
 
-	public Invoice_Model(){}
+	public Invoice_Model(){
+		this.items = new ArrayList<Items_Model>();
+
+	}
+	
+	
 
 
 	public int getId() {
@@ -56,16 +60,6 @@ public class Invoice_Model {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-
-	public int getJob_ID() {
-		return job_ID;
-	}
-
-
-	public void setJob_ID(int job_ID) {
-		this.job_ID = job_ID;
 	}
 
 
@@ -89,36 +83,6 @@ public class Invoice_Model {
 	}
 
 
-	public String getMake() {
-		return make;
-	}
-
-
-	public void setMake(String make) {
-		this.make = make;
-	}
-
-
-	public String getModel() {
-		return model;
-	}
-
-
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-
-	public String getTech() {
-		return tech;
-	}
-
-
-	public void setTech(String tech) {
-		this.tech = tech;
-	}
-
-
 	public String getDate() {
 		return date;
 	}
@@ -126,16 +90,6 @@ public class Invoice_Model {
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-
-	public String getService() {
-		return service;
-	}
-
-
-	public void setService(String service) {
-		this.service = service;
 	}
 
 
@@ -148,32 +102,41 @@ public class Invoice_Model {
 		this.price = price;
 	}
 
+	
+	
+	
 
-	public String getParts() {
-		return parts;
+	public String getService() {
+		return service;
 	}
 
 
-	public void setParts(String parts) {
-		this.parts = parts;
+	public void setService(String service) {
+		this.service = service;
+	}
+
+
+	public ArrayList<Items_Model> getItems() {
+		return items;
+	}
+
+
+	public void setItems(ArrayList<Items_Model> items) {
+		this.items = items;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Invoice_Model [id=" + id + ", job_ID=" + job_ID
-				+ ", customername=" + customername + ", vehiclereg="
-				+ vehiclereg + ", make=" + make + ", model=" + model
-				+ ", tech=" + tech + ", date=" + date + ", service=" + service
-				+ ", price=" + price + ", parts=" + parts
-				+ "]";
+		return "Invoice_Model [id=" + id + ", customername=" + customername
+				+ ", vehiclereg=" + vehiclereg + ", date=" + date + ", price="
+				+ price + ", service=" + service + ", items=" + items + "]";
 	}
-	
-	
-	/*public String partstoString() {
-		return  "\n" +Arrays.toString(parts) +"\n";
-	}*/
-	
+
+
+
+
+
 
 	
 	

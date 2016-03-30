@@ -4,16 +4,19 @@ import gui.CustomerTable;
 import gui.Customer_GUI;
 import gui.Main_Menu_GUI;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import service.Customer_Service;
+import utility.FieldValidator;
 import model.Customer_Model;
 import model.Customers_Vehicle_Model;
 
@@ -27,6 +30,7 @@ public class Customer_Controller {
 	private ArrayList<Customers_Vehicle_Model> owners_carList   = new ArrayList<Customers_Vehicle_Model>();
 	private ArrayList<Customer_Model> customers = new ArrayList<Customer_Model>();
 	private CustomerTable customertable;
+	//private FieldValidator fieldValidator = new FieldValidator();
 
 	public Customer_Controller(Main_Menu_GUI maingui, Customer_GUI customergui,
 			Customer_Model customermodel) {
@@ -64,7 +68,7 @@ public class Customer_Controller {
 						customergui.getDetailphonetextfield().setText(
 								Integer.toString(c.getPhone_number()));
 						customergui.getDetailinfotextfield().setText(
-								c.getCustomer_info());
+								c.getCustomerEmail());
 						customergui.getDetailhistorytextfield().setText(
 								c.getCustomer_history());
 					}
@@ -118,10 +122,60 @@ public class Customer_Controller {
 	}
 
 	class editListener implements ActionListener {
-
+		private String message;
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			try {
+			
+
+			boolean validFirstName = FieldValidator.checkNameField(customergui.getDetailfirstnametextfield());
+			boolean validSecondName = FieldValidator.checkNameField(customergui.getDetailsurnameTextField());
+			boolean validPhoneNo = FieldValidator.checkPhoneNo(customergui.getDetailphonetextfield());			
+			boolean validEmail = FieldValidator.checkEmail(customergui.getDetailinfotextfield());
+			boolean validHistory = FieldValidator.checkInfoHistory(customergui.getDetailhistorytextfield());
+			
+			
+			
+			message = "";
+			
+			if(validFirstName == false ){
+				message = "INVALID ENTRY IN FIRST NAME FIELD - (not empty, only letters, not more than 30 characters)\n";
+				customergui.getDetailfirstnametextfield().setBackground(Color.YELLOW);
+			}else
+				customergui.getDetailfirstnametextfield().setBackground(Color.WHITE);
+			
+			if(validSecondName == false){
+				message = message + "INVALID ENTRY IN SECOND NAME FIELD - (not empty, only letters, not more than 30 characters)\n";
+				customergui.getDetailsurnameTextField().setBackground(Color.YELLOW);
+			}else
+				customergui.getDetailsurnameTextField().setBackground(Color.WHITE);
+			
+			if(validPhoneNo == false){
+				message = message + "INVALID ENTRY IN PHONE NO FIELD - (not empty, only digits, from 8 to 15 digits)\n";
+				customergui.getDetailphonetextfield().setBackground(Color.YELLOW);
+			}else
+				customergui.getDetailphonetextfield().setBackground(Color.WHITE);
+			
+			
+			if(validEmail == false){
+				message = message + "INVALID EMAIL ADDRESS!!! \n";
+				customergui.getDetailinfotextfield().setBackground(Color.YELLOW);
+			}else
+				customergui.getDetailinfotextfield().setBackground(Color.WHITE);
+			
+			if(validHistory == false){
+				message = message + "INVALID ENTRY IN HISTORY FIELD - (not more than 500 characters)\n";
+				customergui.getDetailhistorytextfield().setBackground(Color.YELLOW);
+			}else{
+				customergui.getDetailhistorytextfield().setBackground(Color.WHITE);
+			}
+			
+		
+			if(validFirstName == true && validSecondName == true && validPhoneNo == true && 
+					 validEmail == true && validHistory == true)
+			{
+			
+			
 
 				String firstname = customergui.getDetailfirstnametextfield()
 						.getText();
@@ -157,7 +211,7 @@ public class Customer_Controller {
 							c.setFirst_name(firstname);
 							c.setSurname(surname);
 							c.setPhone_number(phone);
-							c.setCustomer_info(info);
+							c.setCustomerEmail(info);
 							c.setCustomer_history(history);
 							customerservice.update(c);
 							customerservice.close();
@@ -180,12 +234,11 @@ public class Customer_Controller {
 					}
 
 				}
+			}else {
+		    	
+		    	JOptionPane.showMessageDialog( customergui, message, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
 
-			} catch (NumberFormatException nfe) {
-
-				System.out.println("Not A Number: " + nfe.getMessage());
-
-			}
 
 		}
 
@@ -199,8 +252,22 @@ public class Customer_Controller {
 
 				customers.clear();
 				customergui.dispose();
-				maingui.setVisible(true);
+				maingui.setVisible(true);			
+				customergui.getFirstNametextField().setText("");
+				customergui.getSurnametextField().setText("");
+				customergui.getPhonetextField().setText("");
+				customergui.getHistoryTextfield().setText("");
+				customergui.getInfoTextfield().setText("");
+				customergui.getDetailidtextfield().setText("");
+				customergui.getDetailfirstnametextfield().setText("");
+				customergui.getDetailsurnameTextField().setText("");
+				customergui.getDetailphonetextfield().setText("");
+				customergui.getDetailinfotextfield().setText("");
+				customergui.getDetailhistorytextfield().setText("");
+				
+				
 				refreshTable();
+
 			} catch (NumberFormatException nfe) {
 
 				System.out.println("Not A Number: " + nfe.getMessage());
@@ -215,45 +282,93 @@ public class Customer_Controller {
 		customertable.fireTableDataChanged();
 	}
 
+	
+	
 	class addListener implements ActionListener {
 
+		private String message;
+		
 		public void actionPerformed(ActionEvent e) {
 
-			try {
 
-				customerservice.open();
-				String firstname = customergui.getFirstNametextField().getText();
-				String surname = customergui.getSurnametextField().getText();
-				String info = customergui.getInfoTextfield().getText();
-				String history = customergui.getHistoryTextfield().getText();
-				double idextract = Double.parseDouble(customergui.getIDtextField().getText());
-				int id = (int) idextract;
-				double phoneextract = Double.parseDouble(customergui.getPhonetextField().getText());
-				int phone = (int) phoneextract;
-
-				customermodel.setCustomer_id(id);
-				customermodel.setFirst_name(firstname);
-				customermodel.setSurname(surname);
-				customermodel.setPhone_number(phone);
-				customermodel.setCustomer_info(info);
-				customermodel.setCustomer_history(history);
-				//customers.add(customers.size(),customermodel);
-				customerservice.persist(customermodel);
-				customerservice.close();
+				boolean validFirstName = FieldValidator.checkNameField(customergui.getFirstNametextField());
+				boolean validSecondName = FieldValidator.checkNameField(customergui.getSurnametextField());
+				boolean validPhoneNo = FieldValidator.checkPhoneNo(customergui.getPhonetextField());			
+				boolean validEmail = FieldValidator.checkEmail(customergui.getInfoTextfield());
+				boolean validHistory = FieldValidator.checkInfoHistory(customergui.getHistoryTextfield());
 				
-				customergui.getIDtextField().setText("");
-				customergui.getFirstNametextField().setText("");
-				customergui.getSurnametextField().setText("");
-				customergui.getPhonetextField().setText("");
-				customergui.getHistoryTextfield().setText("");
-				customergui.getInfoTextfield().setText("");
-				refreshTable();
+				
+				
+				message = "";
+				
+				if(validFirstName == false ){
+					message = "INVALID ENTRY IN FIRST NAME FIELD - (not empty, only letters, not more than 30 characters)\n";
+					customergui.getFirstNametextField().setBackground(Color.YELLOW);
+				}else
+					customergui.getFirstNametextField().setBackground(Color.WHITE);
+				
+				if(validSecondName == false){
+					message = message + "INVALID ENTRY IN SECOND NAME FIELD - (not empty, only letters, not more than 30 characters)\n";
+					customergui.getSurnametextField().setBackground(Color.YELLOW);
+				}else
+					customergui.getSurnametextField().setBackground(Color.WHITE);
+				
+				if(validPhoneNo == false){
+					message = message + "INVALID ENTRY IN PHONE NO FIELD - (not empty, only digits, from 8 to 15 digits)\n";
+					customergui.getPhonetextField().setBackground(Color.YELLOW);
+				}else
+					customergui.getPhonetextField().setBackground(Color.WHITE);
+				
+				
+				if(validEmail == false){
+					message = message + "INVALID EMAIL ADDRESS!!! \n";
+					customergui.getInfoTextfield().setBackground(Color.YELLOW);
+				}else
+					customergui.getInfoTextfield().setBackground(Color.WHITE);
+				
+				if(validHistory == false){
+					message = message + "INVALID ENTRY IN HISTORY FIELD - (not more than 500 characters)\n";
+					customergui.getHistoryTextfield().setBackground(Color.YELLOW);
+				}else{
+					customergui.getHistoryTextfield().setBackground(Color.WHITE);
+				}
+				
+			
+				if(validFirstName == true && validSecondName == true && validPhoneNo == true && 
+						 validEmail == true && validHistory == true)
+				{
+					customerservice.open();
+					String firstname = customergui.getFirstNametextField().getText();
+					String surname = customergui.getSurnametextField().getText();
+					String info = customergui.getInfoTextfield().getText();
+					String history = customergui.getHistoryTextfield().getText();
+					double phoneextract = Double.parseDouble(customergui.getPhonetextField().getText());
+					int phone = (int) phoneextract;
+					
+					
+					customermodel.setFirst_name(firstname);
+					customermodel.setSurname(surname);
+					customermodel.setPhone_number(phone);
+					customermodel.setCustomerEmail(info);
+					customermodel.setCustomer_history(history);
+					//customers.add(customers.size(),customermodel);
+					customerservice.persist(customermodel);
+					customerservice.close();
+					
+					customergui.getFirstNametextField().setText("");
+					customergui.getSurnametextField().setText("");
+					customergui.getPhonetextField().setText("");
+					customergui.getHistoryTextfield().setText("");
+					customergui.getInfoTextfield().setText("");
+					refreshTable();
 
-			} catch (NumberFormatException nfe) {
-
-				System.out.println("ERROR CANNOT BE DONE: " + nfe.getMessage());
-
+			    }else {
+			    	
+			    	JOptionPane.showMessageDialog( customergui, message, "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
+				
+
+
 
 		}
 

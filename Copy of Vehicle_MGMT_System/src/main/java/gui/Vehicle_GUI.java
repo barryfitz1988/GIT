@@ -16,22 +16,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
+
+import utility.UppercaseDocumentFilter;
 
 public class Vehicle_GUI extends JFrame {
 
 	private JPanel contentPane;
 	private JScrollPane vehicleScroller; 
 	private JTable vehicleTable;
- /*   //headers for the table
-    String[] columns = new String[] {
-      "ID" , "Registration", "Make", "Model", "Chassis Number", "Customer ID"
-    };
-     
-    //actual data for the table in a 2d array
-    Object[][] data = new Object[][] {
-        { 001, "08-c-1999", "VW", "Golf","WVWZZZ1JZ",23 },
-
-    };*/
     private JLabel idLabel;
     private JLabel serviceNameJLabel;
     private JLabel lblmake;
@@ -50,6 +44,7 @@ public class Vehicle_GUI extends JFrame {
     private JTextField customerTextField;
     private JOptionPane updateDetails;
     private JTextField hidden_id_Customertextfield;
+    private DocumentFilter filter = new UppercaseDocumentFilter();
 
 
 	public Vehicle_GUI() {
@@ -63,11 +58,11 @@ public class Vehicle_GUI extends JFrame {
 		
 		JPanel detailsJPanel = new JPanel();
 		detailsJPanel.setBorder(new TitledBorder(null, "Vehicle Details", TitledBorder.LEFT, TitledBorder.TOP, null, null));
-		detailsJPanel.setBounds(22, 11, 322, 381);
+		detailsJPanel.setBounds(22, 11, 322, 152);
 		detailsJPanel.setLayout(null);
 		vehicleTable = new JTable(/*data, columns*/);
 		vehicleScroller = new JScrollPane(vehicleTable);
-		vehicleScroller.setBounds(10, 23, 302, 347);
+		vehicleScroller.setBounds(10, 23, 302, 115);
 		detailsJPanel.add(vehicleScroller);
 		contentPane.add(detailsJPanel);
 		
@@ -120,6 +115,7 @@ public class Vehicle_GUI extends JFrame {
 		regTextfield = new JTextField();
 		regTextfield.setColumns(10);
 		regTextfield.setBounds(105, 75, 136, 20);
+	    ((AbstractDocument) regTextfield.getDocument()).setDocumentFilter(filter);
 		informationJPanel.add(regTextfield);
 		
 		makeTextField = new JTextField();
@@ -135,6 +131,7 @@ public class Vehicle_GUI extends JFrame {
 		chassisTextfield = new JTextField();
 		chassisTextfield.setColumns(10);
 		chassisTextfield.setBounds(105, 205, 136, 20);
+		 ((AbstractDocument) chassisTextfield.getDocument()).setDocumentFilter(filter);
 		informationJPanel.add(chassisTextfield);
 		
 		lblVehicleChassis = new JLabel("Vehicle Chassis");

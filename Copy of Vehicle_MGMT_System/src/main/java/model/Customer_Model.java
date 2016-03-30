@@ -17,17 +17,17 @@ public class Customer_Model {
 	
 	
 	
-	//@GeneratedValue
-	//private int dbID;
+
 	
 	@Id
+	@GeneratedValue
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private int customer_id;
 	private String first_name;
 	private String surname;
 	private int phone_number;
 	@Column(length=255)
-	private String customer_info;
+	private String customer_email;
 	@Column(length=255)
 	private String customer_history;
 
@@ -41,7 +41,7 @@ public class Customer_Model {
 		this.first_name = first_name;
 		this.surname = surname;
 		this.phone_number = phone_number;
-		this.customer_info = customer_info;
+		this.customer_email = customer_email;
 		this.customer_history = customer_history;
 	}
 	
@@ -76,11 +76,11 @@ public class Customer_Model {
 		this.phone_number = phone_number;
 	}
 
-	public String getCustomer_info() {
-		return customer_info;
+	public String getCustomerEmail() {
+		return customer_email;
 	}
-	public void setCustomer_info(String customer_info) {
-		this.customer_info = customer_info;
+	public void setCustomerEmail(String customer_email) {
+		this.customer_email = customer_email;
 	}
 	public String getCustomer_history() {
 		return customer_history;
@@ -96,8 +96,8 @@ public class Customer_Model {
 	public String toString() {
 		return "Customer_Model [customer_id=" + customer_id + ", first_name="
 				+ first_name + ", surname=" + surname + ", phone_number="
-				+ phone_number +  " customer_info="
-				+ customer_info + ", customer_history=" + customer_history
+				+ phone_number +  " customer_email="
+				+ customer_email + ", customer_history=" + customer_history
 				+ "]";
 	}
 

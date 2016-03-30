@@ -11,25 +11,15 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionListener;
 
 public class Invoice_GUI extends JFrame {
 
 	private JPanel contentPane;
 	private JScrollPane serviceScroller; 
-	private JTable serviceTable;
-    //headers for the table
-    String[] columns = new String[] {
-      "ID" , "Registration", "Make", "Model", "Chassis Number", "Customer ID"
-    };
-     
-    //actual data for the table in a 2d array
-    Object[][] data = new Object[][] {
-        { 001, "08-c-1999", "VW", "Golf","WVWZZZ1JZ",23 },
-
-    };
+	private JTable invoiceTable;
     private JButton btnPrint;
     private JButton btnExit;
-    private JTextArea billTextArea;
 
 
 	public Invoice_GUI() {
@@ -43,44 +33,40 @@ public class Invoice_GUI extends JFrame {
 		
 		JPanel detailsJPanel = new JPanel();
 		detailsJPanel.setBorder(new TitledBorder(null, "Invoice Information", TitledBorder.LEFT, TitledBorder.TOP, null, null));
-		detailsJPanel.setBounds(22, 11, 322, 381);
+		detailsJPanel.setBounds(22, 11, 568, 381);
 		detailsJPanel.setLayout(null);
-		serviceTable = new JTable(data, columns);
-		serviceScroller = new JScrollPane(serviceTable);
-		serviceScroller.setBounds(10, 23, 302, 347);
+		invoiceTable = new JTable();
+		serviceScroller = new JScrollPane(invoiceTable);
+		serviceScroller.setBounds(10, 23, 548, 278);
 		detailsJPanel.add(serviceScroller);
 		contentPane.add(detailsJPanel);
 		
-		
-		
-		
-		JPanel informationJPanel = new JPanel();
-		informationJPanel.setBorder(new TitledBorder(null, "Invoice Details", TitledBorder.LEFT, TitledBorder.TOP, null, null));
-		informationJPanel.setBounds(363, 11, 322, 381);
-		contentPane.add(informationJPanel);
-		informationJPanel.setLayout(null);
-		
-		btnPrint = new JButton("Print");
-		btnPrint.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnPrint.setBounds(74, 347, 66, 23);
-		informationJPanel.add(btnPrint);
+		btnPrint = new JButton("Print...");
+		btnPrint.setBounds(371, 347, 66, 23);
+		detailsJPanel.add(btnPrint);
 		
 		btnExit = new JButton("Exit");
-		btnExit.setBounds(225, 347, 66, 23);
-		informationJPanel.add(btnExit);
-		
-		billTextArea = new JTextArea();
-		billTextArea.setEditable(false);
-		billTextArea.setWrapStyleWord(true);
-		billTextArea.setText("This is where the Bill info goes");
-		billTextArea.setBounds(10, 25, 302, 323);
-		informationJPanel.add(billTextArea);
+		btnExit.setBounds(463, 347, 66, 23);
+		detailsJPanel.add(btnExit);
 	}
 
 	
+	
+	
+	public JTable getInvoiceTable() {
+		return invoiceTable;
+	}
+
+
+
+
+	public void setInvoiceTable(JTable invoiceTable) {
+		this.invoiceTable = invoiceTable;
+	}
+
+
+
+
 	public void exitListener(ActionListener listenForButton){
 	    
 		btnExit.addActionListener(listenForButton);
@@ -88,10 +74,19 @@ public class Invoice_GUI extends JFrame {
 		
 		}
 	
+	
+	
 	public void printListener(ActionListener listenForButton){
 	    
 		btnPrint.addActionListener(listenForButton);
 
+		
+		}
+	
+	public void tableSelecterListener(ListSelectionListener rowSelected){
+	    
+		
+		invoiceTable.getSelectionModel().addListSelectionListener(rowSelected);
 		
 		}
 

@@ -22,7 +22,6 @@ import org.hibernate.sql.Delete;
 public class Customer_GUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField IDtextField;
 	private JTextField FirstNametextField;
 	private JTextField surnametextField;
 	private JTextField phonetextField;
@@ -78,57 +77,48 @@ public class Customer_GUI extends JFrame {
 		listCustomerspanel.add(customerScroller);
 		
 		JLabel firstNameJLabel = new JLabel("First Name");
-		firstNameJLabel.setBounds(10, 64, 98, 14);
+		firstNameJLabel.setBounds(10, 24, 98, 14);
 		enterCustoemrJpanel.add(firstNameJLabel);
 		
-		JLabel lblIdNumber = new JLabel("ID Number");
-		lblIdNumber.setBounds(10, 24, 67, 14);
-		enterCustoemrJpanel.add(lblIdNumber);
-		
 		JLabel lblSurname = new JLabel("Surname");
-		lblSurname.setBounds(10, 107, 67, 14);
+		lblSurname.setBounds(10, 64, 67, 14);
 		enterCustoemrJpanel.add(lblSurname);
 		
 		JLabel lblPhoneNumber = new JLabel("Telephone");
-		lblPhoneNumber.setBounds(10, 155, 84, 14);
+		lblPhoneNumber.setBounds(10, 107, 84, 14);
 		enterCustoemrJpanel.add(lblPhoneNumber);
-		
-		IDtextField = new JTextField();
-		IDtextField.setBounds(80, 21, 75, 20);
-		enterCustoemrJpanel.add(IDtextField);
-		IDtextField.setColumns(10);
 		
 		FirstNametextField = new JTextField();
 		FirstNametextField.setColumns(10);
-		FirstNametextField.setBounds(80, 61, 75, 20);
+		FirstNametextField.setBounds(80, 21, 75, 20);
 		enterCustoemrJpanel.add(FirstNametextField);
 		
 		surnametextField = new JTextField();
 		surnametextField.setColumns(10);
-		surnametextField.setBounds(80, 104, 75, 20);
+		surnametextField.setBounds(80, 61, 75, 20);
 		enterCustoemrJpanel.add(surnametextField);
 		
 		phonetextField = new JTextField();
 		phonetextField.setColumns(10);
-		phonetextField.setBounds(80, 152, 75, 20);
+		phonetextField.setBounds(80, 104, 75, 20);
 		enterCustoemrJpanel.add(phonetextField);
 		
-		JLabel lblAdditionalInfo = new JLabel("Information");
-		lblAdditionalInfo.setBounds(159, 21, 73, 20);
+		JLabel lblAdditionalInfo = new JLabel("Email");
+		lblAdditionalInfo.setBounds(10, 157, 73, 20);
 		enterCustoemrJpanel.add(lblAdditionalInfo);
 		
 		infoTextfield = new JTextField();
-		infoTextfield.setBounds(235, 21, 93, 60);
+		infoTextfield.setBounds(80, 157, 134, 20);
 		enterCustoemrJpanel.add(infoTextfield);
 		infoTextfield.setColumns(10);
 		
 		JLabel lblHistory = new JLabel("History");
-		lblHistory.setBounds(165, 107, 67, 14);
+		lblHistory.setBounds(171, 24, 67, 14);
 		enterCustoemrJpanel.add(lblHistory);
 		
 		historyTextfield = new JTextField();
 		historyTextfield.setColumns(10);
-		historyTextfield.setBounds(235, 104, 93, 60);
+		historyTextfield.setBounds(165, 41, 146, 105);
 		enterCustoemrJpanel.add(historyTextfield);
 		
 		addJButton = new JButton("Add");
@@ -157,7 +147,7 @@ public class Customer_GUI extends JFrame {
 		detailphoneJLabel.setBounds(26, 138, 84, 14);
 		customerDetailsJPanel.add(detailphoneJLabel);
 		
-		JLabel detailinfoJLabel = new JLabel("Information");
+		JLabel detailinfoJLabel = new JLabel("Email");
 		detailinfoJLabel.setBounds(218, 22, 73, 20);
 		customerDetailsJPanel.add(detailinfoJLabel);
 		
@@ -188,7 +178,7 @@ public class Customer_GUI extends JFrame {
 		
 		detailinfotextfield = new JTextField();
 		detailinfotextfield.setColumns(10);
-		detailinfotextfield.setBounds(287, 25, 195, 60);
+		detailinfotextfield.setBounds(287, 25, 195, 20);
 		customerDetailsJPanel.add(detailinfotextfield);
 		
 		detailhistorytextfield = new JTextField();
@@ -259,12 +249,7 @@ public class Customer_GUI extends JFrame {
 		}
 	
 	
-	public JTextField getIDtextField() {
-		return IDtextField;
-	}
-	public void setIDtextField(JTextField iDtextField) {
-		IDtextField = iDtextField;
-	}
+
 	public JTextField getFirstNametextField() {
 		return FirstNametextField;
 	}

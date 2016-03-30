@@ -5,6 +5,7 @@ import java.util.List;
 import model.Customer_Model;
 import model.Customers_Vehicle_Model;
 import model.Invoice_Model;
+import model.Items_Model;
 import model.Vehicle_Model;
 
 import org.hibernate.Session;
@@ -61,6 +62,7 @@ public class Invoice_dao implements Invoice_Interface {
 	private static SessionFactory getSessionFactory() {
 		Configuration config = new Configuration();
 		config.addAnnotatedClass(Invoice_Model.class);
+		config.addAnnotatedClass(Items_Model.class);
 		config.configure("hibernate.cfg.xml");
 
 		ServiceRegistryBuilder rgs = new ServiceRegistryBuilder()
@@ -93,6 +95,12 @@ public class Invoice_dao implements Invoice_Interface {
 	public void persist(Invoice_Model entity) {
 		getCurrentSession().save(entity);
 	}
+	
+	public void persistItems(Items_Model entity){
+		getCurrentSession().save(entity);
+		
+	}
+	
 	// dao update to DB
 	public void update(Invoice_Model entity) {
 		getCurrentSession().update(entity);
@@ -113,6 +121,15 @@ public class Invoice_dao implements Invoice_Interface {
 	public List<Invoice_Model> findAll() {
 		List<Invoice_Model> art = (List<Invoice_Model>) getCurrentSession()
 				.createQuery("from Invoice_Model").list();
+		return art;
+	}
+	
+	
+	//List All in DB
+	@SuppressWarnings("unchecked")
+	public List<Items_Model> findAllItems() {
+		List<Items_Model> art = (List<Items_Model>) getCurrentSession()
+				.createQuery("from Items_Model").list();
 		return art;
 	}
 	

@@ -34,6 +34,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import net.sf.dynamicreports.report.exception.DRException;
+
 import org.apache.activemq.filter.function.regexMatchFunction;
 import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
@@ -47,12 +49,15 @@ import service.Parts_Service;
 import service.Service_Service;
 import service.Vehicle_Service;
 import utility.Header_Render;
+import utility.InvoiceTemplate;
 import model.Appointment_Model;
 import model.Appointment_Parts_Model;
 import model.Customer_Model;
 import model.Customers_Vehicle_Model;
 import model.Employee_Model;
+import model.Invoice_Item_Model;
 import model.Invoice_Model;
+import model.Items_Model;
 import model.Parts_Model;
 import model.Service_Model;
 import model.Vehicle_Model;
@@ -189,20 +194,75 @@ public class Appointment_Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-	
+			double price = 0;
+			Invoice_Model invoice  = new Invoice_Model();
+			ArrayList<Items_Model> items = new ArrayList<Items_Model>();
 			
-			int id  = Integer.valueOf(currentappointmentgui.getIdlbl().getText());
-			System.out.println("ID  " + id);
-			StringBuilder stringBuilder = new StringBuilder();
-			String allParts = null;
 			
-			for(Appointment_Parts_Model p : appointment_partsList){
+			
+			for(Service_Model s: services){
+				if(s.getJob_name().equals(currentappointmentgui.getJobOutputLbl().getText())){
+					price = s.getJob_price();
+					
+				}
+			}
+			
+			
+			Items_Model item = new Items_Model(currentappointmentgui.getJobOutputLbl().getText().toString(),1,
+					price,invoice.getId());
+			
+			invoice.setDate(currentappointmentgui.getDateOutputLbl().getText());
+			invoice.setCustomername(currentappointmentgui.getCustomerOutputLbl().getText());
+			invoice.setVehiclereg(currentappointmentgui.getLblVehicleRegOutput().getText());
+			invoice.setPrice(currentappointmentgui.getLblPriceOutPut().getText());
+			invoice.setService(currentappointmentgui.getJobOutputLbl().getText());
+			items.add(item);
+			
+			
+			invoiceservice.open();
+			invoiceservice.persist(invoice);
+			invoiceservice.close();
+
+			
+
+			
+			for(int x = 0; x < currentappointmentgui.getPartstable().getRowCount();x++){
+				//System.out.println(currentappointmentgui.getPartstable().getValueAt(x, 0));
+				
+				for(Parts_Model p : currentparts){
+					if(p.getPart_id() == (int) currentappointmentgui.getPartstable().getValueAt(x, 0)){
+						
+						Items_Model newItem = new Items_Model(p.getPart_name(),1,p.getPart_price(),invoice.getId());
+						items.add(newItem);
+						invoiceservice.open();
+						invoiceservice.persistItem(newItem);
+						invoiceservice.close();
+						break;
+					}
+				
+					
+				}
+				
+				
+			}
+			
+			
+			invoice.setItems(items);
+
+		
+			
+
+			
+
+			
+			
+			/*for(Appointment_Parts_Model p : appointment_partsList){
 				
 				if(p.getAppointment().getAppointment_id() == id){
 					
-					stringBuilder.append("\n"+p.getPart().getPart_name()+"\n");
+					//stringBuilder.append("\n"+p.getPart().getPart_name()+"\n");
 
-					allParts = stringBuilder.toString();
+					//allParts = stringBuilder.toString();
 						
 				}
 			}
@@ -238,16 +298,16 @@ public class Appointment_Controller {
 
 			}
 			
-			invoicemodel.setJob_ID(id);
+			//invoicemodel.setJob_ID(id);
 			invoicemodel.setDate(invoice_date);
 			invoicemodel.setPrice(invoice_price);
 			invoicemodel.setCustomername(invoice_customername);
 			invoicemodel.setMake(invoice_make);
 			invoicemodel.setModel(invoice_model);
 			invoicemodel.setVehiclereg(invoice_vehiclereg);
-			invoicemodel.setTech(invoice_tech);
-			invoicemodel.setService(invoice_service);
-			invoicemodel.setParts(invoice_parts);
+			//invoicemodel.setTech(invoice_tech);
+			//invoicemodel.setService(invoice_service);
+			//invoicemodel.setParts(invoice_parts);
 			invoiceservice.open();
 			appointmentservice.open();
 			appointmentservice.delete(id);
@@ -255,7 +315,7 @@ public class Appointment_Controller {
 			invoiceservice.close();
 			appointmentservice.close();
 			
-		
+		*/
 			int selectedOption = currentappointmentgui.getUpdateDetails()
 					.showConfirmDialog(null, "JOB HAS BEEN INVOICED \n"
 							+ "APPOINTMENT HAS NOW BEEN DELETED \n"
@@ -264,7 +324,12 @@ public class Appointment_Controller {
 							currentappointmentgui.getUpdateDetails().YES_NO_OPTION);
 			if (selectedOption == currentappointmentgui.getUpdateDetails().YES_OPTION) {
 				
-				
+				try {
+					InvoiceTemplate newTempelate = new InvoiceTemplate(invoice);
+				} catch (DRException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 				currentappointmentgui.setVisible(false);
@@ -802,10 +867,17 @@ public class Appointment_Controller {
    	
 					if(parts.getAppointment().getAppointment_id() == Integer.valueOf(currentappointmentgui.getIdlbl().getText())){
 
-						currentparts.add(parts.getPart());
-						price = price + parts.getPart().getPart_price();
-						System.out.println("PRICE"+ price);
-						currentappointmentgui.getLblPriceOutPut().setText(String.valueOf(price));
+						
+					
+						
+							
+							currentparts.add(parts.getPart());
+							price = price + parts.getPart().getPart_price();
+							System.out.println("PRICE"+ price);
+							currentappointmentgui.getLblPriceOutPut().setText(String.valueOf(price));
+							
+						
+						
 					}
 				
 				}
@@ -858,7 +930,7 @@ public class Appointment_Controller {
 				services.clear();
 				currentparts.clear();
 				ownersCarList.clear();
-				servicesname = new String[servicesname.length];
+				//servicesname = new String[servicesname.length];
 				counter = 0;
 				//price = 0;
 				employees.clear();
@@ -901,13 +973,13 @@ public class Appointment_Controller {
 				}
 				
 				
-				List<Invoice_Model> inv = invoiceservice.findAll();
+				/*List<Invoice_Model> inv = invoiceservice.findAll();
 
 				for (int x = 0; x < inv.size(); x++) {
 					invoicemodel = (Invoice_Model) inv.get(x);
 					invoices.add(invoicemodel);
 
-				}
+				}*/
 				
 				
 				List<Appointment_Parts_Model> p = appointmentservice.findAllParts();
